@@ -1,0 +1,52 @@
+﻿@page "/Tester"
+@using Client.Data
+@using Client.Models
+@inject ITest tst
+<h4> upload new test, or search by phone#</h4>
+
+<EditForm Model="@test" OnValidSubmit="@SendTest">
+    <label for="fname">First name:</label><br>
+    <InputTextArea rows="" @bind-Value="x"/>
+    <p></p>
+    <label for="fname">phone number:</label><br>
+    <InputTextArea rows="" @bind-Value="y"/>
+    <p></p>
+    <label for="fname">search test by phone number:</label><br>
+    <InputTextArea rows="" @bind-Value="z"/>
+</EditForm>
+
+<button class="btn btn-primary" @onclick="SendTest">send to server</button>
+<button class="btn btn-primary" @onclick="SearchTest">receive from server</button>
+<!--<table class="table">
+<th>Strings</th>
+    <tr>
+        <th>
+
+        </th>
+    </tr>
+    </table>
+-->
+
+@code {
+    private string x,y,z;
+    private Test test = new Test();
+    private Test alltests;
+    //private int currentCount = 0;
+    
+    protected async Task SearchTest()
+    {
+        alltests = await tst.GetTestAsync(z);
+        //test = alltests;
+        
+        Console.WriteLine(alltests.phoneNo);
+        Console.WriteLine(alltests.name);
+    }
+
+    protected async Task SendTest()
+    {
+        await tst.PostTest(x, y);
+    }
+
+
+    //<button class="btn btn-primary" @onclick="IncrementCount">Execute test</button>
+}
