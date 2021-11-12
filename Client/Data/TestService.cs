@@ -20,7 +20,7 @@ namespace Client.Data
         
 
             //get method virker nu, connected til server. 
-        public async Task<Test> GetTestAsync(string z)
+        public async Task<Test> GetTestAsync(string z)//string z tastes ind i inputfield
         {
             using HttpClient client = new HttpClient();
             HttpResponseMessage responseMessage = await client.GetAsync("http://localhost:8080/friend/"+z);
