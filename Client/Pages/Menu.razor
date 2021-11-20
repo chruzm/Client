@@ -1,0 +1,68 @@
+﻿@page "/Menu"
+@using Client.Data
+@using Client.Models
+@using System.Text.Json
+@inject ITest tst
+<h3>Menu</h3>
+ <table class="table">
+        <thead>
+        <tr><th></th>
+            <th>items</th>
+            <th>price</th>
+        </tr>
+        </thead>
+        <tbody>
+                @foreach (var item in men) {
+                    <tr>
+                        <td>@item.number</td>
+                        <td>@item.food</td>
+                        <td>@item.price DKK</td>
+        <!--<td>/td>-->
+        
+        <td>
+        </td>
+        </tr>
+        }
+        </tbody>
+
+ </table>
+
+
+@code {
+    private static string listuri = "http://localhost:8080/menu/1";
+    private string x,y,z;
+    static MenuObject onitem = new MenuObject();
+    static List<MenuObject> men = new List<MenuObject>();
+    //private Test test = new Test();
+    //private Test alltests;
+    //private int currentCount = 0;
+    
+    //OnInitializedAsync gør så metoden automatisk bliver kaldt, når siden er laoded
+    protected override async Task OnInitializedAsync()
+    {
+        //Console.WriteLine(tst.GetListAsync("1"));
+        for (int x = 1; x <= 5; x++)
+        {
+            men.Add(await tst.GetMenuAsync(x));
+        }
+        HttpClient client = new HttpClient();
+        Task<string> stringAsync = client.GetStringAsync(listuri);
+        string message = await stringAsync;
+        MenuObject result = JsonSerializer.Deserialize<MenuObject>(message);
+        //onitem.food = result;
+        //onitem.price = 500;
+        
+       // men.Add(onitem);
+        //int a = 0;
+        //Console.WriteLine(result.food);
+
+    //alltests = tst.GetListAsync("1");
+        //todos = allTodos;
+        //todos = TodoData.GetTodos();
+    }
+
+    public static async Task<IList<MenuObject>> GetListAsync()
+    {
+        return null;
+    }
+}

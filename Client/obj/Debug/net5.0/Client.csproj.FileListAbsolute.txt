@@ -54,3 +54,5 @@ C:\Users\Bruger\RiderProjects\Client\Client\obj\Debug\net5.0\Client.genruntimeco
 C:\Users\Bruger\RiderProjects\Client\Client\obj\Debug\net5.0\Client.csproj.CopyComplete
 C:\Users\Bruger\RiderProjects\Client\Client\obj\Debug\net5.0\RazorDeclaration\Pages\Tester.razor.g.cs
 C:\Users\Bruger\RiderProjects\Client\Client\obj\Debug\net5.0\Razor\Pages\Tester.razor.g.cs
+C:\Users\Bruger\RiderProjects\Client\Client\obj\Debug\net5.0\RazorDeclaration\Pages\Menu.razor.g.cs
+C:\Users\Bruger\RiderProjects\Client\Client\obj\Debug\net5.0\Razor\Pages\Menu.razor.g.cs

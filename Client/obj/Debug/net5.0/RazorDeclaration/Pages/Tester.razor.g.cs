@@ -105,7 +105,7 @@ using Client.Models;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 30 "C:\Users\Bruger\RiderProjects\Client\Client\Pages\Tester.razor"
+#line 31 "C:\Users\Bruger\RiderProjects\Client\Client\Pages\Tester.razor"
        
     private string x,y,z;
     private Test test = new Test();
@@ -121,9 +121,15 @@ using Client.Models;
         Console.WriteLine(alltests.name);
     }
 
+    //virker ikke helt endnu
     protected async Task SendTest()
     {
         await tst.PostTest(x, y);
+    }
+    
+    protected async Task SearchList()
+    {
+        //await tst.GetListAsync("1");
     }
 
 

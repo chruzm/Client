@@ -17,6 +17,7 @@
 
 <button class="btn btn-primary" @onclick="SendTest">send to server</button>
 <button class="btn btn-primary" @onclick="SearchTest">receive from server</button>
+<button class="btn btn-primary" @onclick="SearchList">receive testlist from database(string form)</button>
 <!--<table class="table">
 <th>Strings</th>
     <tr>
@@ -42,9 +43,15 @@
         Console.WriteLine(alltests.name);
     }
 
+    //virker ikke helt endnu
     protected async Task SendTest()
     {
         await tst.PostTest(x, y);
+    }
+    
+    protected async Task SearchList()
+    {
+        //await tst.GetListAsync("1");
     }
 
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Client.Models;
 
@@ -8,6 +9,10 @@ namespace Client.Data
     { 
         Task<Test> GetTestAsync(string z);
         Task<string> PostTest(string x, string y);
+
+        Task<MenuObject> GetMenuAsync(int z);
         
+        
+
     }
 }
