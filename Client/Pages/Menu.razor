@@ -4,35 +4,52 @@
 @using System.Text.Json
 @inject ITest tst
 <h3>Menu</h3>
- <table class="table">
+@if (men == null) {
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else if (!men.Any()) {
+    <p>
+        <em>No ToDo items exist. Please add some.</em>
+    </p>
+}
+else
+{
+    <table class="table">
         <thead>
-        <tr><th></th>
+        <tr><th>*</th>
             <th>items</th>
             <th>price</th>
         </tr>
         </thead>
         <tbody>
-                @foreach (var item in men) {
-                    <tr>
-                        <td>@item.number</td>
-                        <td>@item.food</td>
-                        <td>@item.price DKK</td>
-        <!--<td>/td>-->
-        
-        <td>
-        </td>
-        </tr>
+        @foreach (var item in men)
+        {
+            <tr>
+                <td>@item.number</td>
+                <td>@item.food</td>
+                <td>@item.price DKK</td>
+                <!--<td>/td>-->
+
+                <td>
+                </td>
+            </tr>
         }
         </tbody>
 
- </table>
-
+    </table>
+    
+    
+    
+}
 
 @code {
     private static string listuri = "http://localhost:8080/menu/1";
     private string x,y,z;
     static MenuObject onitem = new MenuObject();
-    static List<MenuObject> men = new List<MenuObject>();
+    static IList<MenuObject> men = new List<MenuObject>();
+    static IList<MenuObject> order = new List<MenuObject>();
     //private Test test = new Test();
     //private Test alltests;
     //private int currentCount = 0;
@@ -43,7 +60,20 @@
         //Console.WriteLine(tst.GetListAsync("1"));
         for (int x = 1; x <= 5; x++)
         {
-            men.Add(await tst.GetMenuAsync(x));
+            if (men.Count == 0)
+            {
+                men.Add(await tst.GetMenuAsync(x));
+            }
+            else if (men.Count > 0)
+            {
+                men.Clear();
+                men.Add(await tst.GetMenuAsync(1));
+                men.Add(await tst.GetMenuAsync(2));
+                men.Add(await tst.GetMenuAsync(3));
+                men.Add(await tst.GetMenuAsync(4));
+                men.Add(await tst.GetMenuAsync(5));
+            }
+            
         }
         HttpClient client = new HttpClient();
         Task<string> stringAsync = client.GetStringAsync(listuri);
