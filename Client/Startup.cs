@@ -27,6 +27,7 @@ namespace Client
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<ITest, TestService>();
+            services.AddSingleton<IUser, UserService>();
             services.AddRazorPages();
             services.AddServerSideBlazor();
         }

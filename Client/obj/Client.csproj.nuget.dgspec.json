@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Bruger\\RiderProjects\\Client\\Client\\Client.csproj": {}
+    "C:\\Users\\amara\\RiderProjects\\Client\\Client\\Client.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Bruger\\RiderProjects\\Client\\Client\\Client.csproj": {
+    "C:\\Users\\amara\\RiderProjects\\Client\\Client\\Client.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Bruger\\RiderProjects\\Client\\Client\\Client.csproj",
+        "projectUniqueName": "C:\\Users\\amara\\RiderProjects\\Client\\Client\\Client.csproj",
         "projectName": "Client",
-        "projectPath": "C:\\Users\\Bruger\\RiderProjects\\Client\\Client\\Client.csproj",
-        "packagesPath": "C:\\Users\\Bruger\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Bruger\\RiderProjects\\Client\\Client\\obj\\",
+        "projectPath": "C:\\Users\\amara\\RiderProjects\\Client\\Client\\Client.csproj",
+        "packagesPath": "C:\\Users\\amara\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\amara\\RiderProjects\\Client\\Client\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Bruger\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\amara\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -55,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
