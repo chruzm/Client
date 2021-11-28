@@ -12,6 +12,7 @@ namespace Client.Data
     {
         private string uri = "http://localhost:8080/";
         
+        //initiate Rest Klient
         public TestService()
         {
             client = new HttpClient();
@@ -59,7 +60,7 @@ namespace Client.Data
         }
         
         /*
-         * get testliste virker nu. liste query fra database til tier3, soap call fra tier3 til 2,
+         * get menu liste virker nu. liste query fra database til tier3, soap call fra tier3 til 2,
          * og rest call fra tier2 til klient
          */ 
         public async Task<MenuObject> GetMenuAsync(int itemnumber)
@@ -78,6 +79,23 @@ namespace Client.Data
             });
             Console.WriteLine(item.food);
             return item ;
+        }
+
+        public async Task<OrderObject> SendOrderAsync(OrderObject o)
+        {
+            HttpClient client = new HttpClient();
+            string testSerialized = JsonSerializer.Serialize(o);
+            
+            StringContent content = new StringContent(
+                testSerialized,
+                Encoding.UTF8,
+                "application/json"
+            );
+            
+            HttpResponseMessage response = await client.PostAsync("http://localhost:8080/order/"+o.ordernumber, content);
+            Console.WriteLine("Order: "+o.ordernumber+" sent to server");
+
+            return o;
         }
     }
 }

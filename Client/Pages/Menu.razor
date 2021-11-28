@@ -2,6 +2,7 @@
 @using Client.Data
 @using Client.Models
 @using System.Text.Json
+@using System.Collections.ObjectModel
 @inject ITest tst
 <h3>Menu</h3>
 @if (men == null) {
@@ -40,6 +41,7 @@ else
 
     </table>
     
+    <button class="btn btn-primary" @onclick="SendOrder">send to server</button>
     
     
 }
@@ -49,7 +51,9 @@ else
     private string x,y,z;
     static MenuObject onitem = new MenuObject();
     static IList<MenuObject> men = new List<MenuObject>();
-    static IList<MenuObject> order = new List<MenuObject>();
+    //static IList<MenuObject> menu = new List<MenuObject>();
+    static IList<OrderObject> orders = new Collection<OrderObject>();
+    OrderObject o = new OrderObject();
     //private Test test = new Test();
     //private Test alltests;
     //private int currentCount = 0;
@@ -91,8 +95,26 @@ else
         //todos = TodoData.GetTodos();
     }
 
-    public static async Task<IList<MenuObject>> GetListAsync()
+    public async Task SendOrder()
+    {
+        o.ordernumber = 1;
+        o.price = 112;
+        o.items = "Rød grød med fløde";
+        o.adr = "Oktobervej 30, 8210 århus v";
+        orders.Add(o);
+
+        for (int x = 0; x < orders.Count; x++)
+        {
+            await tst.SendOrderAsync(o);
+        }
+        orders.Clear();
+    }
+
+
+
+
+    /*public static async Task<IList<MenuObject>> GetListAsync()
     {
         return null;
-    }
+    }*/
 }
