@@ -12,7 +12,7 @@
 }
 else if (!men.Any()) {
     <p>
-        <em>No ToDo items exist. Please add some.</em>
+        <em>cant load menu.</em>
     </p>
 }
 else
@@ -28,21 +28,33 @@ else
         @foreach (var item in men)
         {
             <tr>
-                <td>@item.number</td>
+                <td><button class="btn" @onclick="() => orderedmenuitems.Add(item)">
+                        @item.number
+                    </button>
+                </td>
                 <td>@item.food</td>
                 <td>@item.price DKK</td>
                 <!--<td>/td>-->
-
                 <td>
                 </td>
             </tr>
         }
         </tbody>
-
     </table>
-    
-    <button class="btn btn-primary" @onclick="SendOrder">send to server</button>
-    
+    <br/>
+    <h4>Make order</h4>
+    <EditForm Model="@o" OnValidSubmit="@SendOrder">
+        <label for="fname">Adresse:</label><br>
+        <InputTextArea rows="1" @bind-Value="x"/>
+        <p></p>
+        <label for="fname">Email:</label><br>
+        <InputTextArea rows="1" @bind-Value="y"/>
+        <p></p>
+    <input type="submit" value="Submit">
+    </EditForm>
+
+    //<button class="btn btn-primary" @onclick="SendOrder">send to server</button>
+    <button class="btn btn-primary" @onclick="AddOrder">test addorder</button>
     
 }
 
@@ -51,6 +63,7 @@ else
     private string x,y,z;
     static MenuObject onitem = new MenuObject();
     static IList<MenuObject> men = new List<MenuObject>();
+    static IList<MenuObject> orderedmenuitems = new List<MenuObject>();
     //static IList<MenuObject> menu = new List<MenuObject>();
     static IList<OrderObject> orders = new Collection<OrderObject>();
     OrderObject o = new OrderObject();
@@ -59,9 +72,11 @@ else
     //private int currentCount = 0;
     
     //OnInitializedAsync gør så metoden automatisk bliver kaldt, når siden er laoded
+    //virker
     protected override async Task OnInitializedAsync()
     {
-        //Console.WriteLine(tst.GetListAsync("1"));
+        orderedmenuitems.Clear();
+    //Console.WriteLine(tst.GetListAsync("1"));
         for (int x = 1; x <= 5; x++)
         {
             if (men.Count == 0)
@@ -83,7 +98,7 @@ else
         Task<string> stringAsync = client.GetStringAsync(listuri);
         string message = await stringAsync;
         MenuObject result = JsonSerializer.Deserialize<MenuObject>(message);
-        //onitem.food = result;
+    //onitem.food = result;
         //onitem.price = 500;
         
        // men.Add(onitem);
@@ -95,12 +110,32 @@ else
         //todos = TodoData.GetTodos();
     }
 
+    public async Task AddOrder()
+    {
+        for (int x = 0; x < orderedmenuitems.Count; x++)
+        {
+            o.price += orderedmenuitems[x].price;
+            o.items += orderedmenuitems[x].food+" + ";
+        }
+        Random number = new Random();
+        o.adr = x;
+        o.ordernumber = number.Next(100000)+1;
+        Console.WriteLine("mad tilføjet til bestilling: "+o.items);
+        Console.WriteLine("total pris af bestilling: "+o.price);
+        Console.WriteLine("bestillingsNummer: "+o.ordernumber);
+        Console.WriteLine("Til adresse: "+o.adr);
+
+        await tst.SendOrderAsync(o);
+        
+    }
+
+    //virker
     public async Task SendOrder()
     {
         o.ordernumber = 1;
         o.price = 112;
         o.items = "Rød grød med fløde";
-        o.adr = "Oktobervej 30, 8210 århus v";
+        o.adr = x;
         orders.Add(o);
 
         for (int x = 0; x < orders.Count; x++)
@@ -110,9 +145,7 @@ else
         orders.Clear();
     }
 
-
-
-
+    
     /*public static async Task<IList<MenuObject>> GetListAsync()
     {
         return null;
