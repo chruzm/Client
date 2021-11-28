@@ -50,7 +50,11 @@ else
                     </button>
                 </td>
                 <td>
-                    -
+                    <button class="btn" @onclick="() => orderedmenuitems.Remove(item)">
+                    <h7 style="color:tomato;">
+                        -remove-
+                    </h7>
+                    </button>
                 </td>
                 <!--<td>/td>-->
                 <td>
@@ -74,8 +78,10 @@ else
     <button class="btn btn-primary" @onclick="AddOrder">set order</button>
     
     
-    <div style="position:relative; left:400px; top:-80px;">
-        <label for="">items in order: @orderedmenuitems.Count </label>
+    <div style="position:relative; left:400px; top:-100px;">
+        <label for="">items in order: @orderedmenuitems.Count <br/>
+            total price: @getOrderTotal() DKK
+        </label>
     </div>
 }
 
@@ -148,9 +154,21 @@ else
         Console.WriteLine("Til adresse: "+o.adr);
 
         await tst.SendOrderAsync(o);
-        SendMail();
+        //SendMail();
     }
 
+    public string getOrderTotal()
+    {
+        int total = 0;
+        for (int x = 0; x < orderedmenuitems.Count; x++)
+        {
+            total += orderedmenuitems[x].price;
+        }
+        Console.WriteLine(total);
+        return total.ToString();
+    }
+
+    /*
     //forsøger
     public async Task SendMail()
     {
@@ -196,4 +214,5 @@ else
             throw ex;
         }
     }
+    */
 }
