@@ -11,8 +11,8 @@ namespace Client.Data
         Task<string> PostTest(string x, string y);
 
         Task<MenuObject> GetMenuAsync(int z);
-        
-        
+
+        Task<OrderObject> SendOrderAsync(OrderObject o);
 
     }
 }
