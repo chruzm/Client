@@ -82,6 +82,20 @@ using Client.Shared;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 2 "C:\Users\amara\RiderProjects\Client\Client\Pages\SignUp.razor"
+using Client.Models;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 3 "C:\Users\amara\RiderProjects\Client\Client\Pages\SignUp.razor"
+using Client.Data;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/SignUp")]
     public partial class SignUp : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -90,6 +104,23 @@ using Client.Shared;
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 30 "C:\Users\amara\RiderProjects\Client\Client\Pages\SignUp.razor"
+       
+    private User newUser = new User(); 
+    
+
+    public async void SingUp()
+    {
+        await _userImplementation.AddUsers(newUser);
+        NavigationManager.NavigateTo("/SingUp");
+    }
+
+#line default
+#line hidden
+#nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IUser _userImplementation { get; set; }
     }
 }
 #pragma warning restore 1591

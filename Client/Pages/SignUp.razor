@@ -1,6 +1,39 @@
 ﻿@page "/SignUp"
+@using Client.Models
+@using Client.Data
+@inject IUser _userImplementation
+@inject NavigationManager NavigationManager
+
 <h3>SignUp</h3>
 
+<EditForm Model="@newUser" OnValidSubmit="@SingUp"/>
+<div class="form-group"> User Name:
+    <br/>
+    <InputText  @bind-Value="newUser.UserName"/>
+</div>
+<div class="form-group"> Address:
+    <br/>
+    <InputText @bind-Value="newUser.Address"/>
+</div>
+<div class="form-group"> Password:
+    <br/>
+    <InputNumber @bind-Value="newUser.Password"/>
+</div>
+<div class="form-group"> Phone:
+    <br/>
+    <InputNumber @bind-Value="newUser.Phone"/>
+</div>
+<p class="actions">
+    <button class="btn btn-outline-dark" type="submit">Create</button>
+</p>
+
 @code {
+    private User newUser = new User(); 
     
+
+    public async void SingUp()
+    {
+        await _userImplementation.AddUsers(newUser);
+        NavigationManager.NavigateTo("/SingUp");
+    }
 }

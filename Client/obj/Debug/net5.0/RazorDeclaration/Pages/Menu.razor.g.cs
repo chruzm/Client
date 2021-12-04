@@ -103,6 +103,27 @@ using System.Text.Json;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 5 "C:\Users\amara\RiderProjects\Client\Client\Pages\Menu.razor"
+using System.Collections.ObjectModel;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 6 "C:\Users\amara\RiderProjects\Client\Client\Pages\Menu.razor"
+using System.Net;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 7 "C:\Users\amara\RiderProjects\Client\Client\Pages\Menu.razor"
+using System.Net.Mail;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/Menu")]
     public partial class Menu : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -112,29 +133,49 @@ using System.Text.Json;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 31 "C:\Users\amara\RiderProjects\Client\Client\Pages\Menu.razor"
+#line 82 "C:\Users\amara\RiderProjects\Client\Client\Pages\Menu.razor"
        
+    //adressen for rest serveren som holder vores menu
     private static string listuri = "http://localhost:8080/menu/1";
     private string x,y,z;
     static MenuObject onitem = new MenuObject();
-    static List<MenuObject> men = new List<MenuObject>();
+    static IList<MenuObject> men = new List<MenuObject>();
+    static IList<MenuObject> orderedmenuitems = new List<MenuObject>();
+    //static IList<MenuObject> menu = new List<MenuObject>();
+    static IList<OrderObject> orders = new Collection<OrderObject>();
+    OrderObject o = new OrderObject();
     //private Test test = new Test();
     //private Test alltests;
     //private int currentCount = 0;
     
     //OnInitializedAsync gør så metoden automatisk bliver kaldt, når siden er laoded
+    //virker
     protected override async Task OnInitializedAsync()
     {
-        //Console.WriteLine(tst.GetListAsync("1"));
+        orderedmenuitems.Clear();
+    //Console.WriteLine(tst.GetListAsync("1"));
         for (int x = 1; x <= 5; x++)
         {
-            men.Add(await tst.GetMenuAsync(x));
+            if (men.Count == 0)
+            {
+                men.Add(await tst.GetMenuAsync(x));
+            }
+            else if (men.Count > 0)
+            {
+                men.Clear();
+                men.Add(await tst.GetMenuAsync(1));
+                men.Add(await tst.GetMenuAsync(2));
+                men.Add(await tst.GetMenuAsync(3));
+                men.Add(await tst.GetMenuAsync(4));
+                men.Add(await tst.GetMenuAsync(5));
+            }
+            
         }
         HttpClient client = new HttpClient();
         Task<string> stringAsync = client.GetStringAsync(listuri);
         string message = await stringAsync;
         MenuObject result = JsonSerializer.Deserialize<MenuObject>(message);
-        //onitem.food = result;
+    //onitem.food = result;
         //onitem.price = 500;
         
        // men.Add(onitem);
@@ -146,9 +187,69 @@ using System.Text.Json;
         //todos = TodoData.GetTodos();
     }
 
-    public static async Task<IList<MenuObject>> GetListAsync()
+    public async Task AddOrder()
     {
-        return null;
+        for (int x = 0; x < orderedmenuitems.Count; x++)
+        {
+            o.price += orderedmenuitems[x].price;
+            o.items += orderedmenuitems[x].food+" + ";
+        }
+        Random number = new Random();
+        o.adr = x;
+        o.ordernumber = number.Next(100000)+1;
+        Console.WriteLine("mad tilføjet til bestilling: "+o.items);
+        Console.WriteLine("total pris af bestilling: "+o.price);
+        Console.WriteLine("bestillingsNummer: "+o.ordernumber);
+        Console.WriteLine("Til adresse: "+o.adr);
+
+        await tst.SendOrderAsync(o);
+        SendMail();
+    }
+
+    //forsøger
+    public async Task SendMail()
+    {
+        try
+        {
+            SmtpClient mySmtpClient = new SmtpClient("my.smtp.exampleserver.net");
+
+    // set smtp-client with basicAuthentication
+            mySmtpClient.UseDefaultCredentials = false;
+            System.Net.NetworkCredential basicAuthenticationInfo = new
+                System.Net.NetworkCredential("username", "password");
+            mySmtpClient.Credentials = basicAuthenticationInfo;
+
+    // add from,to mailaddresses
+            MailAddress from = new MailAddress("test@example.com", "TestFromName");
+            MailAddress to = new MailAddress("test2@example.com", "TestToName");
+            MailMessage myMail = new System.Net.Mail.MailMessage(from, to);
+
+    // add ReplyTo
+            MailAddress replyTo = new MailAddress("reply@example.com");
+            myMail.ReplyToList.Add(replyTo);
+
+    // set subject and encoding
+            myMail.Subject = "Test message";
+            myMail.SubjectEncoding = System.Text.Encoding.UTF8;
+
+    // set body-message and encoding
+            myMail.Body = "<b>Test Mail</b><br>using <b>HTML</b>.";
+            myMail.BodyEncoding = System.Text.Encoding.UTF8;
+    // text or html
+            myMail.IsBodyHtml = true;
+
+            mySmtpClient.Send(myMail);
+        }
+
+        catch (SmtpException ex)
+        {
+            throw new ApplicationException
+                ("SmtpException has occured: " + ex.Message);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
     }
 
 #line default

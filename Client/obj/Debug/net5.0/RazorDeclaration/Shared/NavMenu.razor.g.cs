@@ -90,7 +90,7 @@ using Client.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 28 "C:\Users\amara\RiderProjects\Client\Client\Shared\NavMenu.razor"
+#line 33 "C:\Users\amara\RiderProjects\Client\Client\Shared\NavMenu.razor"
        
     private bool collapseNavMenu = true;
 
