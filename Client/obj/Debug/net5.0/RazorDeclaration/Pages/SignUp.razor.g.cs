@@ -109,7 +109,7 @@ using Client.Data;
        
     private User newUser = new User(); 
     
-
+    
     public async void SingUp()
     {
         await _userImplementation.AddUsers(newUser);
